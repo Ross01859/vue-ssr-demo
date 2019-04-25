@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <div>SSR</div>
+    <div>VUE</div>
+    <div>消息中心</div> -->
     <el-menu :default-active="activeIndex"
              class="el-menu-demo"
              mode="horizontal"
