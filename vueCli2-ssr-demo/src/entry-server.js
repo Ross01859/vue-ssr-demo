@@ -2,7 +2,7 @@ import { createApp } from "./app";
 
 export default context => {
   return new Promise((resolve, reject) => {
-    const { app, router } = createApp();
+    const { app, router } = createApp(context);
     router.push(context.url);
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();
@@ -10,7 +10,20 @@ export default context => {
       if (!matchedComponents.length) {
         return reject({ code: 404 });
       }
-      resolve(app);
+      Promise.all(
+        matchedComponents.map(
+          ({ asyncData }) =>
+            asyncData &&
+            asyncData({
+              route: router.currentRoute
+            })
+        )
+      )
+        .then(() => {
+          // context.state = store.state;
+          resolve(app);
+        })
+        .catch(reject);
     }, reject);
   });
 };

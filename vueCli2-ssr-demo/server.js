@@ -6,12 +6,6 @@ const { createBundleRenderer } = require("vue-server-renderer");
 const resolve = file => path.resolve(__dirname, file);
 
 const serverBundle = require("./dist/vue-ssr-server-bundle.json");
-const renderer = createBundleRenderer(serverBundle, {
-  runInNewContext: false, // 推荐
-  template: fs.readFileSync("./ssr.tem.html", "utf-8"),
-  clientManifest: require("./dist/vue-ssr-client-manifest.json"), // （可选）客户端构建 manifest
-  basedir: resolve("./dist")
-});
 
 server.get("*", (req, res) => {
   // const app = new Vue({
@@ -24,6 +18,12 @@ server.get("*", (req, res) => {
   //   },
   //   template: fs.readFileSync("./ssr.tem.html", "utf-8")
   // });
+  const renderer = createBundleRenderer(serverBundle, {
+    runInNewContext: false, // 推荐
+    template: fs.readFileSync("./index.html", "utf-8"),
+    clientManifest: require("./dist/vue-ssr-client-manifest.json"), // （可选）客户端构建 manifest
+    basedir: resolve("./dist")
+  });
   const context = {
     title: "Vue SSR demo", // default title
     url: req.url,

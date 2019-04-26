@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <!-- <div>SSR</div>
-    <div>VUE</div>
-    <div>消息中心</div> -->
-    <el-menu :default-active="activeIndex"
+  <div class="menu-nav">
+    <ul>
+      <li>SSR</li>
+      <li>VUE</li>
+      <li>Vue-Router</li>
+      <li>VUEX</li>
+      <li>NODE</li>
+      <li>EXPRESS</li>
+    </ul>
+    <!-- <el-menu :default-active="activeIndex"
              class="el-menu-demo"
              mode="horizontal"
              :router="true">
@@ -21,7 +26,7 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="3" route="/news">消息中心</el-menu-item>
-    </el-menu>
+    </el-menu> -->
   </div>
 </template>
 
@@ -33,9 +38,9 @@ export default {
       activeIndex: '1',
     }
   },
-  watch:{
-    '$route.path':{
-      handler(val){
+  watch: {
+    '$route.path': {
+      handler(val) {
         console.log(val)
       }
     }
@@ -44,4 +49,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.menu-nav {
+  text-align: center;
+  ul {
+    margin: 0px auto;
+    width: 80%;
+    display: flex;
+    background: #f3f3f3;
+    height: 50px;
+    line-height: 50px;
+    li {
+      flex: 1;
+      display: inline-block;
+      cursor: pointer;
+      &:hover{
+        background: #d3d3d3;
+      }
+    }
+  }
+}
 </style>

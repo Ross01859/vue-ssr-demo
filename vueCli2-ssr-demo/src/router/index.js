@@ -9,7 +9,7 @@ export function createRouter() {
     routes: [
       {
         path: "*",
-        redirect: "/home"
+        redirect: "/news"
       },
       {
         path: "/",

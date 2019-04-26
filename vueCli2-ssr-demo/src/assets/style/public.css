@@ -4,3 +4,27 @@ body,
   height: 100vh;
   width: 100vw;
 }
+/*
+.clearfix::after {
+  overflow: auto;
+  _height: 1%;
+} */
+/*
+.clearfix:after{
+  content: ".";
+  visibility: hidden;
+  clear: both;
+  display: block;
+  height: 0;
+} */
+
+.clearfloat:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+}
+.clearfloat {
+  zoom: 1;
+}

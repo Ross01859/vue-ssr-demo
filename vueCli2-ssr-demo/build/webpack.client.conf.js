@@ -4,6 +4,7 @@ const utils = require("./utils");
 const config = require("../config");
 const vueLoaderConfig = require("./vue-loader.conf");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const isProduction = process.env.NODE_ENV === "production";
 function resolve(dir) {
   return path.join(__dirname, "..", dir);
 }
@@ -11,7 +12,7 @@ function resolve(dir) {
 module.exports = {
   context: path.resolve(__dirname, "../"),
   entry: {
-    app: "./src/main.js"
+    app: "./src/entry-client.js"
   },
   output: {
     path: config.build.assetsRoot,
@@ -28,8 +29,29 @@ module.exports = {
       "@": resolve("src")
     }
   },
+  plugins: isProduction
+    // 确保添加了此插件！
+    ? [new ExtractTextPlugin({ filename: 'common.[chunkhash].css' })]
+    : [],
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
+        options: {
+          // enable CSS extraction
+          extractCSS: isProduction
+        }
+      },
+      {
+        test:/\.css$/,
+        use: isProduction
+          ? ExtractTextPlugin.extract({
+              use: 'css-loader',
+              fallback: 'vue-style-loader'
+            })
+          : ['vue-style-loader', 'css-loader']
+      },
       {
         test: /\.vue$/,
         loader: "vue-loader",
